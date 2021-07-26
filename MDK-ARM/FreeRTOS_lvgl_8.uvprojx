@@ -339,7 +339,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F429xx,STM32F4</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;         ../Drivers/STM32F4xx_HAL_Driver/Inc;         ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;         ../Middlewares/Third_Party/FreeRTOS/Source/include;         ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;         ../Drivers/CMSIS/Device/ST/STM32F4xx/Include;         ../Drivers/CMSIS/Include;         ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2;         ..\Drivers\GUI;         ..\Drivers\GUI\lvgl;         ..\Drivers\GUI\lvgl_app\lv_demos\src\lv_demo_widgets;         ..\Drivers\GUI\lvgl\examples\porting;         ..\Drivers\GUI\lvgl_app\lv_demos\src\lv_demo_music</IncludePath>
+              <IncludePath>../Core/Inc;             ../Drivers/STM32F4xx_HAL_Driver/Inc;             ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;             ../Middlewares/Third_Party/FreeRTOS/Source/include;             ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;             ../Drivers/CMSIS/Device/ST/STM32F4xx/Include;             ../Drivers/CMSIS/Include;             ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2;             ..\Drivers\GUI;             ..\Drivers\GUI\lvgl;             ..\Drivers\GUI\lvgl_app\lv_demos\src\lv_demo_widgets;             ..\Drivers\GUI\lvgl\examples\porting;             ..\Drivers\GUI\lvgl_app\lv_demos\src\lv_demo_music</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
