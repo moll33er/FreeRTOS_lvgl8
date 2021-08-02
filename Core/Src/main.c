@@ -36,8 +36,9 @@
 /* USER CODE BEGIN PTD */
 
 extern uint16_t _aclogo_IKKEM_200[];
+// lvgl中断刷新
 extern __IO bool g_gpu_state;
-extern lv_disp_drv_t disp_drv;
+extern lv_disp_drv_t *g_disp_drv;
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -132,6 +133,7 @@ int main(void)
   /* Initialize interrupts */
   MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
+  // 必须初始化io，否则产生拖影
   LCD_GPIO_Config();
   HAL_GPIO_WritePin(LTDC_BL_GPIO_Port, LTDC_BL_Pin, GPIO_PIN_SET);  /* 开背光*/
   LCD_Clear(LCD_COLOR_WHITE);
@@ -274,7 +276,7 @@ static void MX_DMA2D_Init(void)
   /* USER CODE END DMA2D_Init 0 */
 
   /* USER CODE BEGIN DMA2D_Init 1 */
-
+  // dma2d完成回调
   hdma2d.XferCpltCallback = mDMA2Dcallvack;
   /* USER CODE END DMA2D_Init 1 */
   hdma2d.Instance = DMA2D;
@@ -487,10 +489,15 @@ int fputc(int ch, FILE *f)
   return ch;
 }
 
+/**
+ * @brief DMA2D传输完成回调，通知lvgl刷新完成
+ * @param {DMA2D_HandleTypeDef} *hdma2d
+ * @return {*}
+ */
 void mDMA2Dcallvack(DMA2D_HandleTypeDef *hdma2d){
     if(g_gpu_state){
         g_gpu_state = false;
-        lv_disp_flush_ready(&disp_drv);
+        lv_disp_flush_ready(g_disp_drv);
     }
 }
 /* USER CODE END 4 */
@@ -512,55 +519,9 @@ void StartLVGLTask(void *argument)
   /* Infinite loop */
   for(;;)
   {
-//        for ( int y = 0; y < 57; y++)
-//        {
-//            for ( int x = 0; x < 220; x++)
-//            {
-//                *(__IO uint16_t*) (hltdc.LayerCfg[0].FBStartAdress + (2*(y*800 + x))) = (uint16_t)_aclogo_IKKEM_200[y*220+x];
-//            }
-//            
-//        }
-      
 
-//      hdma2d.Init.Mode         = DMA2D_M2M;
-//      hdma2d.Init.ColorMode    = DMA2D_OUTPUT_RGB565;
-//      hdma2d.Init.OutputOffset = 800-220;  
-//      hdma2d.Instance = DMA2D;
-//        /*##-3- 前景层配置 ###########################################*/
-////    hdma2d.LayerCfg[0].AlphaMode = DMA2D_NO_MODIF_ALPHA;      /* 保持输入颜色格式中的Alpha值 */
-////    hdma2d.LayerCfg[0].InputAlpha = 0xFF;                     /* 完全不透明 */
-////    hdma2d.LayerCfg[0].InputColorMode = DMA2D_OUTPUT_RGB565; /* 输入颜色格式 */
-////    hdma2d.LayerCfg[0].InputOffset = 220;                     /* 输入无偏移 */
-//    //    /* DMA2D 初始化 */
-//      if(HAL_DMA2D_Init(&hdma2d) == HAL_OK) 
-//      {
-//        if(HAL_DMA2D_ConfigLayer(&hdma2d, 0) == HAL_OK) 
-//        {
-//          if (HAL_DMA2D_Start(&hdma2d, (uint32_t)_aclogo_IKKEM_200, LAYER0_ADDR, 220, 57) == HAL_OK)
-//          {
-//            /* DMA轮询传输 */  
-//            HAL_DMA2D_PollForTransfer(&hdma2d, 100);
-//          }
-//        }
-//      } 	
-
-    /* DMA2D配置 */
-//    DMA2D->CR      = 0x00000000UL | (1 << 9);
-//    DMA2D->FGMAR   = (uint32_t)_aclogo_IKKEM_200;// 源地址
-//    DMA2D->OMAR    = (uint32_t)LAYER0_ADDR;// 目标地址
-//    
-//    DMA2D->FGOR    = 0;// 源数据偏移（像素）
-//    DMA2D->OOR     = 800-220;// 目标地址偏移（像素）
-//    DMA2D->FGPFCCR = DMA2D_OUTPUT_RGB565;// 颜色格式
-//    DMA2D->NLR     = (uint32_t)(220 << 16) | (uint32_t)57;// 宽和高
-//     /* 启动传输 */
-//    DMA2D->CR   |= DMA2D_CR_START;
-//    
-//    /* 等待DMA2D传输完成 */
-//    while (DMA2D->CR & DMA2D_CR_START) {}
-
-        lv_task_handler();
-    osDelay(10);
+    lv_task_handler();
+    osDelay(30);
   }
   /* USER CODE END 5 */
 }
@@ -600,7 +561,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     HAL_IncTick();
   }
   /* USER CODE BEGIN Callback 1 */
-
+  // lvgl心跳
   if (htim->Instance == TIM2) {
     lv_tick_inc(1);
   }

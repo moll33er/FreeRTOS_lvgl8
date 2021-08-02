@@ -62,6 +62,8 @@ void Error_Handler(void);
 #define LAYER0_ADDR 0xD0000000
 #define LCD_WIDTH 800
 #define LCD_HEIGHT 480
+#define COLOR_BUF_SIZE		(MY_DISP_HOR_RES*MY_DISP_VER_RES)	//全屏的大小
+#define LVGL_BUF_ADDR		(LAYER0_ADDR + COLOR_BUF_SIZE * 2)  //LVGL显示缓存
 #define LTDC_BL_Pin GPIO_PIN_7
 #define LTDC_BL_GPIO_Port GPIOD
 /* USER CODE BEGIN Private defines */

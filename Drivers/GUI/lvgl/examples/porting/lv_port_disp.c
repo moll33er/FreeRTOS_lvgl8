@@ -22,9 +22,8 @@
  *      TYPEDEFS
  **********************/
 __IO bool g_gpu_state;
-lv_disp_drv_t disp_drv;
+lv_disp_drv_t *g_disp_drv;
 
-#define COLOR_BUF_SIZE		(MY_DISP_HOR_RES*MY_DISP_VER_RES)	//全屏的大小
 //static lv_color_t buf_1[MY_DISP_HOR_RES * MY_DISP_VER_RES] __attribute__((at(LAYER0_ADDR+COLOR_BUF_SIZE*10))); 
 /**********************
  *  STATIC PROTOTYPES
@@ -81,8 +80,8 @@ void lv_port_disp_init(void)
 
     /* Example for 1) */
     static lv_disp_draw_buf_t draw_buf_dsc_1;
-    static lv_color_t buf_1[MY_DISP_HOR_RES * MY_DISP_VER_RES] __attribute__((at(LAYER0_ADDR+COLOR_BUF_SIZE*10)));
-    lv_disp_draw_buf_init(&draw_buf_dsc_1, buf_1, NULL, MY_DISP_HOR_RES * MY_DISP_VER_RES);   /*Initialize the display buffer*/
+    static lv_color_t buf_1[COLOR_BUF_SIZE] __attribute__((at(LVGL_BUF_ADDR)));
+    lv_disp_draw_buf_init(&draw_buf_dsc_1, buf_1, NULL, COLOR_BUF_SIZE);   /*Initialize the display buffer*/
 
     // /* Example for 2) */
     // static lv_disp_draw_buf_t draw_buf_dsc_2;
@@ -90,24 +89,24 @@ void lv_port_disp_init(void)
     // static lv_color_t buf_2_1[MY_DISP_HOR_RES * 10];                        /*An other buffer for 10 rows*/
     // lv_disp_draw_buf_init(&draw_buf_dsc_2, buf_2_1, buf_2_1, MY_DISP_HOR_RES * 10);   /*Initialize the display buffer*/
 
-    // /* Example for 3) also set disp_drv.full_refresh = 1 below*/
-    // static lv_disp_draw_buf_t draw_buf_dsc_3;
-    // static lv_color_t buf_3_1[MY_DISP_HOR_RES * MY_DISP_VER_RES];            /*A screen sized buffer*/
-    // static lv_color_t buf_3_1[MY_DISP_HOR_RES * MY_DISP_VER_RES];            /*An other screen sized buffer*/
-    // lv_disp_draw_buf_init(&draw_buf_dsc_3, buf_3_1, buf_3_2, MY_DISP_VER_RES * LV_VER_RES_MAX);   /*Initialize the display buffer*/
+//    /* Example for 3) also set disp_drv.full_refresh = 1 below*/
+//    static lv_disp_draw_buf_t draw_buf_dsc_3;
+//    static lv_color_t buf_3_1[MY_DISP_HOR_RES * MY_DISP_VER_RES] __attribute__((at(LAYER0_ADDR+COLOR_BUF_SIZE*6)));            /*A screen sized buffer*/
+//    static lv_color_t buf_3_2[MY_DISP_HOR_RES * MY_DISP_VER_RES] __attribute__((at(LAYER0_ADDR+COLOR_BUF_SIZE*10)));            /*An other screen sized buffer*/
+//    lv_disp_draw_buf_init(&draw_buf_dsc_3, buf_3_1, buf_3_2, MY_DISP_VER_RES * MY_DISP_VER_RES);   /*Initialize the display buffer*/
 
     /*-----------------------------------
      * Register the display in LVGL
      *----------------------------------*/
 
-//    static lv_disp_drv_t disp_drv;                         /*Descriptor of a display driver*/
+    static lv_disp_drv_t disp_drv;                         /*Descriptor of a display driver*/
     lv_disp_drv_init(&disp_drv);                    /*Basic initialization*/
 
     /*Set up the functions to access to your display*/
 
     /*Set the resolution of the display*/
-    disp_drv.hor_res = 800;
-    disp_drv.ver_res = 480;
+    disp_drv.hor_res = MY_DISP_HOR_RES;
+    disp_drv.ver_res = MY_DISP_VER_RES;
 
     /*Used to copy the buffer's content to the display*/
     disp_drv.flush_cb = disp_flush;
@@ -125,7 +124,7 @@ void lv_port_disp_init(void)
 
     /*Finally register the driver*/
     lv_disp_drv_register(&disp_drv);
-    
+    g_disp_drv = & disp_drv;
 }
 
 /**********************
