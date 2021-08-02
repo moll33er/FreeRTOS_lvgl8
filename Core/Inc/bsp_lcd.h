@@ -320,7 +320,7 @@ void     LCD_MspDeInit(LTDC_HandleTypeDef *hltdc, void *Params);
 void     LCD_ClockConfig(LTDC_HandleTypeDef *hltdc, void *Params);
 
 void LCD_LayerInit(uint16_t LayerIndex, uint32_t FB_Address,uint32_t PixelFormat);
-
+void LCD_GPIO_Config(void);
 void LL_FillBuffer(uint32_t LayerIndex, void *pDst, uint32_t xSize, uint32_t ySize, uint32_t OffLine, uint32_t ColorIndex);
 void LL_ConvertLineToARGB8888(void *pSrc, void *pDst, uint32_t xSize, uint32_t ColorMode);
 #endif /* __BSP_LCD_H */

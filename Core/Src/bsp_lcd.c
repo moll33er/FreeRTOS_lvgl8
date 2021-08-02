@@ -63,157 +63,157 @@ static void LL_ConvertLineToARGB8888(void * pSrc, void *pDst, uint32_t xSize, ui
   * @param  无
   * @retval 无
   */
-//static void LCD_GPIO_Config(void)
-//{ 
-//	GPIO_InitTypeDef GPIO_InitStruct;
-//  
-//  /* 使能LCD使用到的引脚时钟 */
-//                          //红色数据线
-//  LTDC_R0_GPIO_CLK_ENABLE();LTDC_R1_GPIO_CLK_ENABLE();LTDC_R2_GPIO_CLK_ENABLE();\
-//  LTDC_R3_GPIO_CLK_ENABLE();LTDC_R4_GPIO_CLK_ENABLE();LTDC_R5_GPIO_CLK_ENABLE();\
-//  LTDC_R6_GPIO_CLK_ENABLE();LTDC_R7_GPIO_CLK_ENABLE();LTDC_G0_GPIO_CLK_ENABLE();\
-//  LTDC_G1_GPIO_CLK_ENABLE();LTDC_G2_GPIO_CLK_ENABLE();LTDC_G3_GPIO_CLK_ENABLE();\
-//  LTDC_G3_GPIO_CLK_ENABLE();LTDC_G5_GPIO_CLK_ENABLE();LTDC_G6_GPIO_CLK_ENABLE();\
-//  LTDC_G7_GPIO_CLK_ENABLE();LTDC_B0_GPIO_CLK_ENABLE();LTDC_B1_GPIO_CLK_ENABLE();\
-//  LTDC_B2_GPIO_CLK_ENABLE();LTDC_B3_GPIO_CLK_ENABLE();LTDC_B4_GPIO_CLK_ENABLE();\
-//  LTDC_B5_GPIO_CLK_ENABLE();LTDC_B6_GPIO_CLK_ENABLE();LTDC_B7_GPIO_CLK_ENABLE();\
-//  LTDC_CLK_GPIO_CLK_ENABLE();LTDC_HSYNC_GPIO_CLK_ENABLE();LTDC_VSYNC_GPIO_CLK_ENABLE();\
-//  LTDC_DE_GPIO_CLK_ENABLE();LTDC_DISP_GPIO_CLK_ENABLE();LTDC_BL_GPIO_CLK_ENABLE();
-///* GPIO配置 */
+void LCD_GPIO_Config(void)
+{ 
+	GPIO_InitTypeDef GPIO_InitStruct;
+  
+  /* 使能LCD使用到的引脚时钟 */
+                          //红色数据线
+  LTDC_R0_GPIO_CLK_ENABLE();LTDC_R1_GPIO_CLK_ENABLE();LTDC_R2_GPIO_CLK_ENABLE();\
+  LTDC_R3_GPIO_CLK_ENABLE();LTDC_R4_GPIO_CLK_ENABLE();LTDC_R5_GPIO_CLK_ENABLE();\
+  LTDC_R6_GPIO_CLK_ENABLE();LTDC_R7_GPIO_CLK_ENABLE();LTDC_G0_GPIO_CLK_ENABLE();\
+  LTDC_G1_GPIO_CLK_ENABLE();LTDC_G2_GPIO_CLK_ENABLE();LTDC_G3_GPIO_CLK_ENABLE();\
+  LTDC_G3_GPIO_CLK_ENABLE();LTDC_G5_GPIO_CLK_ENABLE();LTDC_G6_GPIO_CLK_ENABLE();\
+  LTDC_G7_GPIO_CLK_ENABLE();LTDC_B0_GPIO_CLK_ENABLE();LTDC_B1_GPIO_CLK_ENABLE();\
+  LTDC_B2_GPIO_CLK_ENABLE();LTDC_B3_GPIO_CLK_ENABLE();LTDC_B4_GPIO_CLK_ENABLE();\
+  LTDC_B5_GPIO_CLK_ENABLE();LTDC_B6_GPIO_CLK_ENABLE();LTDC_B7_GPIO_CLK_ENABLE();\
+  LTDC_CLK_GPIO_CLK_ENABLE();LTDC_HSYNC_GPIO_CLK_ENABLE();LTDC_VSYNC_GPIO_CLK_ENABLE();\
+  LTDC_DE_GPIO_CLK_ENABLE();LTDC_DISP_GPIO_CLK_ENABLE();LTDC_BL_GPIO_CLK_ENABLE();
+/* GPIO配置 */
 
-// /* 红色数据线 */                        
-//  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
-//  GPIO_InitStruct.Mode  = GPIO_MODE_AF_PP;
-//  GPIO_InitStruct.Pull  = GPIO_PULLUP;
-//  
-//  GPIO_InitStruct.Pin =   LTDC_R0_GPIO_PIN; 
-//  GPIO_InitStruct.Alternate = LTDC_R0_AF;
-//  HAL_GPIO_Init(LTDC_R0_GPIO_PORT, &GPIO_InitStruct);
+ /* 红色数据线 */                        
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+  GPIO_InitStruct.Mode  = GPIO_MODE_AF_PP;
+  GPIO_InitStruct.Pull  = GPIO_PULLUP;
+  
+  GPIO_InitStruct.Pin =   LTDC_R0_GPIO_PIN; 
+  GPIO_InitStruct.Alternate = LTDC_R0_AF;
+  HAL_GPIO_Init(LTDC_R0_GPIO_PORT, &GPIO_InitStruct);
 
-//  GPIO_InitStruct.Pin =   LTDC_R1_GPIO_PIN; 
-//  GPIO_InitStruct.Alternate = LTDC_R1_AF;
-//  HAL_GPIO_Init(LTDC_R1_GPIO_PORT, &GPIO_InitStruct);
-//  
-//  GPIO_InitStruct.Pin =   LTDC_R2_GPIO_PIN; 
-//  GPIO_InitStruct.Alternate = LTDC_R2_AF;
-//  HAL_GPIO_Init(LTDC_R2_GPIO_PORT, &GPIO_InitStruct);
-//  
-//  GPIO_InitStruct.Pin =   LTDC_R3_GPIO_PIN; 
-//  GPIO_InitStruct.Alternate = LTDC_R3_AF;
-//  HAL_GPIO_Init(LTDC_R3_GPIO_PORT, &GPIO_InitStruct);
-//  
-//  GPIO_InitStruct.Pin =   LTDC_R4_GPIO_PIN; 
-//  GPIO_InitStruct.Alternate = LTDC_R4_AF;
-//  HAL_GPIO_Init(LTDC_R4_GPIO_PORT, &GPIO_InitStruct);
-//  
-//  GPIO_InitStruct.Pin =   LTDC_R5_GPIO_PIN; 
-//  GPIO_InitStruct.Alternate = LTDC_R5_AF;
-//  HAL_GPIO_Init(LTDC_R5_GPIO_PORT, &GPIO_InitStruct);
-//  
-//  GPIO_InitStruct.Pin =   LTDC_R6_GPIO_PIN; 
-//  GPIO_InitStruct.Alternate = LTDC_R6_AF;
-//  HAL_GPIO_Init(LTDC_R6_GPIO_PORT, &GPIO_InitStruct);
-//  
-//  GPIO_InitStruct.Pin =   LTDC_R7_GPIO_PIN; 
-//  GPIO_InitStruct.Alternate = LTDC_R7_AF;
-//  HAL_GPIO_Init(LTDC_R7_GPIO_PORT, &GPIO_InitStruct);
-//  
-//  //绿色数据线
-//  GPIO_InitStruct.Pin =   LTDC_G0_GPIO_PIN; 
-//  GPIO_InitStruct.Alternate = LTDC_G0_AF;
-//  HAL_GPIO_Init(LTDC_G0_GPIO_PORT, &GPIO_InitStruct);
+  GPIO_InitStruct.Pin =   LTDC_R1_GPIO_PIN; 
+  GPIO_InitStruct.Alternate = LTDC_R1_AF;
+  HAL_GPIO_Init(LTDC_R1_GPIO_PORT, &GPIO_InitStruct);
+  
+  GPIO_InitStruct.Pin =   LTDC_R2_GPIO_PIN; 
+  GPIO_InitStruct.Alternate = LTDC_R2_AF;
+  HAL_GPIO_Init(LTDC_R2_GPIO_PORT, &GPIO_InitStruct);
+  
+  GPIO_InitStruct.Pin =   LTDC_R3_GPIO_PIN; 
+  GPIO_InitStruct.Alternate = LTDC_R3_AF;
+  HAL_GPIO_Init(LTDC_R3_GPIO_PORT, &GPIO_InitStruct);
+  
+  GPIO_InitStruct.Pin =   LTDC_R4_GPIO_PIN; 
+  GPIO_InitStruct.Alternate = LTDC_R4_AF;
+  HAL_GPIO_Init(LTDC_R4_GPIO_PORT, &GPIO_InitStruct);
+  
+  GPIO_InitStruct.Pin =   LTDC_R5_GPIO_PIN; 
+  GPIO_InitStruct.Alternate = LTDC_R5_AF;
+  HAL_GPIO_Init(LTDC_R5_GPIO_PORT, &GPIO_InitStruct);
+  
+  GPIO_InitStruct.Pin =   LTDC_R6_GPIO_PIN; 
+  GPIO_InitStruct.Alternate = LTDC_R6_AF;
+  HAL_GPIO_Init(LTDC_R6_GPIO_PORT, &GPIO_InitStruct);
+  
+  GPIO_InitStruct.Pin =   LTDC_R7_GPIO_PIN; 
+  GPIO_InitStruct.Alternate = LTDC_R7_AF;
+  HAL_GPIO_Init(LTDC_R7_GPIO_PORT, &GPIO_InitStruct);
+  
+  //绿色数据线
+  GPIO_InitStruct.Pin =   LTDC_G0_GPIO_PIN; 
+  GPIO_InitStruct.Alternate = LTDC_G0_AF;
+  HAL_GPIO_Init(LTDC_G0_GPIO_PORT, &GPIO_InitStruct);
 
-//  GPIO_InitStruct.Pin =   LTDC_G1_GPIO_PIN; 
-//  GPIO_InitStruct.Alternate = LTDC_G1_AF;
-//  HAL_GPIO_Init(LTDC_G1_GPIO_PORT, &GPIO_InitStruct);
-//  
-//  GPIO_InitStruct.Pin =   LTDC_G2_GPIO_PIN;
-//  GPIO_InitStruct.Alternate = LTDC_G2_AF;
-//  HAL_GPIO_Init(LTDC_G2_GPIO_PORT, &GPIO_InitStruct);
-//  
-//  GPIO_InitStruct.Pin =   LTDC_G3_GPIO_PIN;
-//  GPIO_InitStruct.Alternate = LTDC_G3_AF;
-//  HAL_GPIO_Init(LTDC_G3_GPIO_PORT, &GPIO_InitStruct);
-//  
-//  GPIO_InitStruct.Pin =   LTDC_G4_GPIO_PIN;
-//  GPIO_InitStruct.Alternate = LTDC_G4_AF;
-//  HAL_GPIO_Init(LTDC_G4_GPIO_PORT, &GPIO_InitStruct);
-//  
-//  GPIO_InitStruct.Pin =   LTDC_G5_GPIO_PIN;
-//  GPIO_InitStruct.Alternate = LTDC_G5_AF;
-//  HAL_GPIO_Init(LTDC_G5_GPIO_PORT, &GPIO_InitStruct);
-//  
-//  GPIO_InitStruct.Pin =   LTDC_G6_GPIO_PIN;
-//  GPIO_InitStruct.Alternate = LTDC_G6_AF;
-//  HAL_GPIO_Init(LTDC_G6_GPIO_PORT, &GPIO_InitStruct);
-//  
-//  GPIO_InitStruct.Pin =   LTDC_G7_GPIO_PIN;
-//  GPIO_InitStruct.Alternate = LTDC_G7_AF;
-//  HAL_GPIO_Init(LTDC_G7_GPIO_PORT, &GPIO_InitStruct);
-//  
-//  //蓝色数据线
-//  GPIO_InitStruct.Pin =   LTDC_B0_GPIO_PIN;
-//  GPIO_InitStruct.Alternate = LTDC_B0_AF;
-//  HAL_GPIO_Init(LTDC_B0_GPIO_PORT, &GPIO_InitStruct);
+  GPIO_InitStruct.Pin =   LTDC_G1_GPIO_PIN; 
+  GPIO_InitStruct.Alternate = LTDC_G1_AF;
+  HAL_GPIO_Init(LTDC_G1_GPIO_PORT, &GPIO_InitStruct);
+  
+  GPIO_InitStruct.Pin =   LTDC_G2_GPIO_PIN;
+  GPIO_InitStruct.Alternate = LTDC_G2_AF;
+  HAL_GPIO_Init(LTDC_G2_GPIO_PORT, &GPIO_InitStruct);
+  
+  GPIO_InitStruct.Pin =   LTDC_G3_GPIO_PIN;
+  GPIO_InitStruct.Alternate = LTDC_G3_AF;
+  HAL_GPIO_Init(LTDC_G3_GPIO_PORT, &GPIO_InitStruct);
+  
+  GPIO_InitStruct.Pin =   LTDC_G4_GPIO_PIN;
+  GPIO_InitStruct.Alternate = LTDC_G4_AF;
+  HAL_GPIO_Init(LTDC_G4_GPIO_PORT, &GPIO_InitStruct);
+  
+  GPIO_InitStruct.Pin =   LTDC_G5_GPIO_PIN;
+  GPIO_InitStruct.Alternate = LTDC_G5_AF;
+  HAL_GPIO_Init(LTDC_G5_GPIO_PORT, &GPIO_InitStruct);
+  
+  GPIO_InitStruct.Pin =   LTDC_G6_GPIO_PIN;
+  GPIO_InitStruct.Alternate = LTDC_G6_AF;
+  HAL_GPIO_Init(LTDC_G6_GPIO_PORT, &GPIO_InitStruct);
+  
+  GPIO_InitStruct.Pin =   LTDC_G7_GPIO_PIN;
+  GPIO_InitStruct.Alternate = LTDC_G7_AF;
+  HAL_GPIO_Init(LTDC_G7_GPIO_PORT, &GPIO_InitStruct);
+  
+  //蓝色数据线
+  GPIO_InitStruct.Pin =   LTDC_B0_GPIO_PIN;
+  GPIO_InitStruct.Alternate = LTDC_B0_AF;
+  HAL_GPIO_Init(LTDC_B0_GPIO_PORT, &GPIO_InitStruct);
 
-//  GPIO_InitStruct.Pin =   LTDC_B1_GPIO_PIN;
-//  GPIO_InitStruct.Alternate = LTDC_B1_AF;
-//  HAL_GPIO_Init(LTDC_B1_GPIO_PORT, &GPIO_InitStruct);
-//  
-//  GPIO_InitStruct.Pin =   LTDC_B2_GPIO_PIN;
-//  GPIO_InitStruct.Alternate = LTDC_B2_AF;
-//  HAL_GPIO_Init(LTDC_B2_GPIO_PORT, &GPIO_InitStruct);
-//  
-//  GPIO_InitStruct.Pin =   LTDC_B3_GPIO_PIN;
-//  GPIO_InitStruct.Alternate = LTDC_B3_AF;
-//  HAL_GPIO_Init(LTDC_B3_GPIO_PORT, &GPIO_InitStruct);
-//  
-//  GPIO_InitStruct.Pin =   LTDC_B4_GPIO_PIN;
-//  GPIO_InitStruct.Alternate = LTDC_B4_AF;
-//  HAL_GPIO_Init(LTDC_B4_GPIO_PORT, &GPIO_InitStruct);
-//  
-//  GPIO_InitStruct.Pin =   LTDC_B5_GPIO_PIN;
-//  GPIO_InitStruct.Alternate = LTDC_B5_AF;
-//  HAL_GPIO_Init(LTDC_B5_GPIO_PORT, &GPIO_InitStruct);
-//  
-//  GPIO_InitStruct.Pin =   LTDC_B6_GPIO_PIN;
-//  GPIO_InitStruct.Alternate = LTDC_B6_AF;
-//  HAL_GPIO_Init(LTDC_B6_GPIO_PORT, &GPIO_InitStruct);
-//  
-//  GPIO_InitStruct.Pin =   LTDC_B7_GPIO_PIN;
-//  GPIO_InitStruct.Alternate = LTDC_B7_AF;
-//  HAL_GPIO_Init(LTDC_B7_GPIO_PORT, &GPIO_InitStruct);
-//  
-//  //控制信号线
-//  GPIO_InitStruct.Pin = LTDC_CLK_GPIO_PIN;
-//  GPIO_InitStruct.Alternate = LTDC_CLK_AF;
-//  HAL_GPIO_Init(LTDC_CLK_GPIO_PORT, &GPIO_InitStruct);
-//  
-//  GPIO_InitStruct.Pin = LTDC_HSYNC_GPIO_PIN;
-//  GPIO_InitStruct.Alternate = LTDC_HSYNC_AF;
-//  HAL_GPIO_Init(LTDC_HSYNC_GPIO_PORT, &GPIO_InitStruct);
-//  
-//  GPIO_InitStruct.Pin = LTDC_VSYNC_GPIO_PIN;
-//  GPIO_InitStruct.Alternate = LTDC_VSYNC_AF;
-//  HAL_GPIO_Init(LTDC_VSYNC_GPIO_PORT, &GPIO_InitStruct);
-//  
-//  GPIO_InitStruct.Pin = LTDC_DE_GPIO_PIN;
-//  GPIO_InitStruct.Alternate = LTDC_DE_AF;
-//  HAL_GPIO_Init(LTDC_DE_GPIO_PORT, &GPIO_InitStruct);
-//  
-//  //背光BL 及液晶使能信号DISP
-//  GPIO_InitStruct.Pin = LTDC_DISP_GPIO_PIN;                             
-//  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
-//  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-//  GPIO_InitStruct.Pull = GPIO_PULLUP;
-//  
-//  HAL_GPIO_Init(LTDC_DISP_GPIO_PORT, &GPIO_InitStruct);
-//  
-//  
-//  GPIO_InitStruct.Pin = LTDC_BL_GPIO_PIN; 
-//  HAL_GPIO_Init(LTDC_BL_GPIO_PORT, &GPIO_InitStruct);
-//  
-//}
+  GPIO_InitStruct.Pin =   LTDC_B1_GPIO_PIN;
+  GPIO_InitStruct.Alternate = LTDC_B1_AF;
+  HAL_GPIO_Init(LTDC_B1_GPIO_PORT, &GPIO_InitStruct);
+  
+  GPIO_InitStruct.Pin =   LTDC_B2_GPIO_PIN;
+  GPIO_InitStruct.Alternate = LTDC_B2_AF;
+  HAL_GPIO_Init(LTDC_B2_GPIO_PORT, &GPIO_InitStruct);
+  
+  GPIO_InitStruct.Pin =   LTDC_B3_GPIO_PIN;
+  GPIO_InitStruct.Alternate = LTDC_B3_AF;
+  HAL_GPIO_Init(LTDC_B3_GPIO_PORT, &GPIO_InitStruct);
+  
+  GPIO_InitStruct.Pin =   LTDC_B4_GPIO_PIN;
+  GPIO_InitStruct.Alternate = LTDC_B4_AF;
+  HAL_GPIO_Init(LTDC_B4_GPIO_PORT, &GPIO_InitStruct);
+  
+  GPIO_InitStruct.Pin =   LTDC_B5_GPIO_PIN;
+  GPIO_InitStruct.Alternate = LTDC_B5_AF;
+  HAL_GPIO_Init(LTDC_B5_GPIO_PORT, &GPIO_InitStruct);
+  
+  GPIO_InitStruct.Pin =   LTDC_B6_GPIO_PIN;
+  GPIO_InitStruct.Alternate = LTDC_B6_AF;
+  HAL_GPIO_Init(LTDC_B6_GPIO_PORT, &GPIO_InitStruct);
+  
+  GPIO_InitStruct.Pin =   LTDC_B7_GPIO_PIN;
+  GPIO_InitStruct.Alternate = LTDC_B7_AF;
+  HAL_GPIO_Init(LTDC_B7_GPIO_PORT, &GPIO_InitStruct);
+  
+  //控制信号线
+  GPIO_InitStruct.Pin = LTDC_CLK_GPIO_PIN;
+  GPIO_InitStruct.Alternate = LTDC_CLK_AF;
+  HAL_GPIO_Init(LTDC_CLK_GPIO_PORT, &GPIO_InitStruct);
+  
+  GPIO_InitStruct.Pin = LTDC_HSYNC_GPIO_PIN;
+  GPIO_InitStruct.Alternate = LTDC_HSYNC_AF;
+  HAL_GPIO_Init(LTDC_HSYNC_GPIO_PORT, &GPIO_InitStruct);
+  
+  GPIO_InitStruct.Pin = LTDC_VSYNC_GPIO_PIN;
+  GPIO_InitStruct.Alternate = LTDC_VSYNC_AF;
+  HAL_GPIO_Init(LTDC_VSYNC_GPIO_PORT, &GPIO_InitStruct);
+  
+  GPIO_InitStruct.Pin = LTDC_DE_GPIO_PIN;
+  GPIO_InitStruct.Alternate = LTDC_DE_AF;
+  HAL_GPIO_Init(LTDC_DE_GPIO_PORT, &GPIO_InitStruct);
+  
+  //背光BL 及液晶使能信号DISP
+  GPIO_InitStruct.Pin = LTDC_DISP_GPIO_PIN;                             
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  
+  HAL_GPIO_Init(LTDC_DISP_GPIO_PORT, &GPIO_InitStruct);
+  
+  
+  GPIO_InitStruct.Pin = LTDC_BL_GPIO_PIN; 
+  HAL_GPIO_Init(LTDC_BL_GPIO_PORT, &GPIO_InitStruct);
+  
+}
 
 void LCD_Init(void)
 {

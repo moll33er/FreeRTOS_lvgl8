@@ -21,7 +21,11 @@
 /**********************
  *      TYPEDEFS
  **********************/
+__IO bool g_gpu_state;
+lv_disp_drv_t disp_drv;
 
+#define COLOR_BUF_SIZE		(MY_DISP_HOR_RES*MY_DISP_VER_RES)	//全屏的大小
+//static lv_color_t buf_1[MY_DISP_HOR_RES * MY_DISP_VER_RES] __attribute__((at(LAYER0_ADDR+COLOR_BUF_SIZE*10))); 
 /**********************
  *  STATIC PROTOTYPES
  **********************/
@@ -77,8 +81,8 @@ void lv_port_disp_init(void)
 
     /* Example for 1) */
     static lv_disp_draw_buf_t draw_buf_dsc_1;
-    static lv_color_t buf_1[MY_DISP_HOR_RES * 10];                          /*A buffer for 10 rows*/
-    lv_disp_draw_buf_init(&draw_buf_dsc_1, buf_1, NULL, MY_DISP_HOR_RES * 10);   /*Initialize the display buffer*/
+    static lv_color_t buf_1[MY_DISP_HOR_RES * MY_DISP_VER_RES] __attribute__((at(LAYER0_ADDR+COLOR_BUF_SIZE*10)));
+    lv_disp_draw_buf_init(&draw_buf_dsc_1, buf_1, NULL, MY_DISP_HOR_RES * MY_DISP_VER_RES);   /*Initialize the display buffer*/
 
     // /* Example for 2) */
     // static lv_disp_draw_buf_t draw_buf_dsc_2;
@@ -96,7 +100,7 @@ void lv_port_disp_init(void)
      * Register the display in LVGL
      *----------------------------------*/
 
-    static lv_disp_drv_t disp_drv;                         /*Descriptor of a display driver*/
+//    static lv_disp_drv_t disp_drv;                         /*Descriptor of a display driver*/
     lv_disp_drv_init(&disp_drv);                    /*Basic initialization*/
 
     /*Set up the functions to access to your display*/
@@ -121,6 +125,7 @@ void lv_port_disp_init(void)
 
     /*Finally register the driver*/
     lv_disp_drv_register(&disp_drv);
+    
 }
 
 /**********************
@@ -174,19 +179,20 @@ static void disp_flush(lv_disp_drv_t * disp_drv, const lv_area_t * area, lv_colo
     // 宽和高
 	DMA2D->NLR     = (area->y2-area->y1+1) | ((area->x2 -area->x1 +1) << 16);
     
-//    // 开启中断
-//	DMA2D->CR |= DMA2D_IT_TC|DMA2D_IT_TE|DMA2D_IT_CE;
+    // 开启中断
+	DMA2D->CR |= DMA2D_IT_TC|DMA2D_IT_TE|DMA2D_IT_CE;
   
 	/* 启动传输 */
 	DMA2D->CR   |= DMA2D_CR_START;
     
     
 	/* 等待DMA2D传输完成 */
-	while (DMA2D->CR & DMA2D_CR_START) {}
+//	while (DMA2D->CR & DMA2D_CR_START) {}
+    g_gpu_state = true;
 
     /*IMPORTANT!!!
      *Inform the graphics library that you are ready with the flushing*/
-    lv_disp_flush_ready(disp_drv);
+//    lv_disp_flush_ready(disp_drv);
 }
 
 /*OPTIONAL: GPU INTERFACE*/

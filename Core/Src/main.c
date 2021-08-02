@@ -36,6 +36,8 @@
 /* USER CODE BEGIN PTD */
 
 extern uint16_t _aclogo_IKKEM_200[];
+extern __IO bool g_gpu_state;
+extern lv_disp_drv_t disp_drv;
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -86,7 +88,7 @@ void StartTimesTask(void *argument);
 
 static void MX_NVIC_Init(void);
 /* USER CODE BEGIN PFP */
-
+void mDMA2Dcallvack(DMA2D_HandleTypeDef *hdma2d);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -130,7 +132,7 @@ int main(void)
   /* Initialize interrupts */
   MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
-
+  LCD_GPIO_Config();
   HAL_GPIO_WritePin(LTDC_BL_GPIO_Port, LTDC_BL_Pin, GPIO_PIN_SET);  /* ¿ª±³¹â*/
   LCD_Clear(LCD_COLOR_WHITE);
   /* USER CODE END 2 */
@@ -208,7 +210,7 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.PLL.PLLM = 25;
   RCC_OscInitStruct.PLL.PLLN = 360;
   RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
-  RCC_OscInitStruct.PLL.PLLQ = 4;
+  RCC_OscInitStruct.PLL.PLLQ = 8;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
     Error_Handler();
@@ -233,7 +235,7 @@ void SystemClock_Config(void)
     Error_Handler();
   }
   PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_LTDC;
-  PeriphClkInitStruct.PLLSAI.PLLSAIN = 160;
+  PeriphClkInitStruct.PLLSAI.PLLSAIN = 180;
   PeriphClkInitStruct.PLLSAI.PLLSAIR = 2;
   PeriphClkInitStruct.PLLSAIDivR = RCC_PLLSAIDIVR_4;
   if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
@@ -255,7 +257,7 @@ static void MX_NVIC_Init(void)
   HAL_NVIC_SetPriority(USART1_IRQn, 5, 0);
   HAL_NVIC_EnableIRQ(USART1_IRQn);
   /* DMA2D_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(DMA2D_IRQn, 5, 0);
+  HAL_NVIC_SetPriority(DMA2D_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(DMA2D_IRQn);
 }
 
@@ -273,6 +275,7 @@ static void MX_DMA2D_Init(void)
 
   /* USER CODE BEGIN DMA2D_Init 1 */
 
+  hdma2d.XferCpltCallback = mDMA2Dcallvack;
   /* USER CODE END DMA2D_Init 1 */
   hdma2d.Instance = DMA2D;
   hdma2d.Init.Mode = DMA2D_M2M;
@@ -340,8 +343,8 @@ static void MX_LTDC_Init(void)
   pLayerCfg.PixelFormat = LTDC_PIXEL_FORMAT_RGB565;
   pLayerCfg.Alpha = 255;
   pLayerCfg.Alpha0 = 0;
-  pLayerCfg.BlendingFactor1 = LTDC_BLENDING_FACTOR1_CA;
-  pLayerCfg.BlendingFactor2 = LTDC_BLENDING_FACTOR2_CA;
+  pLayerCfg.BlendingFactor1 = LTDC_BLENDING_FACTOR1_PAxCA;
+  pLayerCfg.BlendingFactor2 = LTDC_BLENDING_FACTOR2_PAxCA;
   pLayerCfg.FBStartAdress = LAYER0_ADDR;
   pLayerCfg.ImageWidth = LCD_WIDTH;
   pLayerCfg.ImageHeight = LCD_HEIGHT;
@@ -484,10 +487,12 @@ int fputc(int ch, FILE *f)
   return ch;
 }
 
-//void HAL_DMA2D_IRQHandler(DMA2D_HandleTypeDef *hdma2d){
-//    for(int i =0; i < 2; i++)
-//    {}
-//}
+void mDMA2Dcallvack(DMA2D_HandleTypeDef *hdma2d){
+    if(g_gpu_state){
+        g_gpu_state = false;
+        lv_disp_flush_ready(&disp_drv);
+    }
+}
 /* USER CODE END 4 */
 
 /* USER CODE BEGIN Header_StartLVGLTask */
